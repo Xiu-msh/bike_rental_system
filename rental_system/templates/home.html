@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to the Bike Rental System</h1>
+    {% if user.is_authenticated %}
+        <p>Logged in as: {{ user.username }}</p>
+        <div>
+            <a href="{% url 'find_bicycles' %}"><button>点击查询</button></a>
+            <a href="{% url 'logout' %}"><button>Logout</button></a>
+        </div>
+        <h2>Your Rental Records</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Bicycle ID</th>
+                    <th>Rent Time</th>
+                    <th>Return Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in rental_records %}
+                    <tr>
+                        <td>{{ record.bicycle.id }}</td>
+                        <td>{{ record.rent_time }}</td>
+                        <td>{{ record.return_time|default:"Not Returned" }}</td>
+                        <td>
+                            {% if not record.return_time %}
+                                <a href="{% url 'return_bicycle' record_id=record.id %}"><button>归还</button></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">No rental records found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <a href="{% url 'login' %}"><button>Login</button></a>
+    {% endif %}
+    <h2>Popular Stations Report</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Station Name</th>
+                <th>Rental Count</th>
+                <th>Bicycle Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for station in popular_stations %}
+                <tr>
+                    <td>{{ station.station_name }}</td>
+                    <td>{{ station.rent_count }}</td>
+                    <td>{{ station.bicycle_count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

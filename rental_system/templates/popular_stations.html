@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Popular Stations</title>
+</head>
+<body>
+    <h2>Popular Stations</h2>
+    <ul>
+        {% for station in stations %}
+            <li>{{ station.station_name }} - {{ station.rent_count }} rentals</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

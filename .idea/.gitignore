@@ -1,0 +1,41 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+# 忽略 SQLite 数据库文件
+db.sqlite3
+
+# 忽略构建目录
+build/
+
+# 忽略日志文件
+*.log
+
+# 忽略 Python 字节码
+__pycache__/
+*.pyc
+
+# 忽略虚拟环境
+.venv/
+venv/
+
+# 忽略 .idea 目录
+.idea/  
+
+# 忽略 .vscode 目录
+.vscode/
+
+
+# 忽略 git 相关的临时文件
+*.git/
+
+# 忽略 .env 文件
+.env
+
+# 忽略数据库迁移文件
+migrations/

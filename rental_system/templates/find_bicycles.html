@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nearby Bicycles</title>
+</head>
+<body>
+    <h2>Nearby Bicycles</h2>
+    <ul>
+        {% for bicycle in bicycles %}
+            <li>
+                {{ bicycle }} - {{ bicycle.station }}
+                <a href="{% url 'rent_bicycle' bicycle_id=bicycle.id %}"><button>租借</button></a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
