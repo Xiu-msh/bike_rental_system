@@ -1,7 +1,0 @@
-1.创建数据库迁移文件
-    python manage.py makemigrations
-2.应用生成的迁移文件
-    python manage.py migrate
-
-3.运行服务器
-    python manage.py runserver
