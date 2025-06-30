@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rent Bicycle</title>
+    <style>
+        /* 模态窗口的样式 */
+        .modal {
+            display: none; /* 默认隐藏 */
+            position: fixed; /* 固定位置 */
+            z-index: 1; /* 置于顶层 */
+            left: 0;
+            top: 0;
+            width: 100%; /* 全宽 */
+            height: 100%; /* 全高 */
+            overflow: auto; /* 如果内容超出视口，则显示滚动条 */
+            background-color: rgb(0,0,0); /* 背景色 */
+            background-color: rgba(0,0,0,0.4); /* 黑色背景带有透明度 */
+            padding-top: 60px; /* 顶部内边距 */
+        }
+
+        /* 模态窗口内容的样式 */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* 15% 从顶部和底部，自动水平居中 */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* 宽度 */
+        }
+
+        /* 关闭按钮的样式 */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Rent a Bicycle</h2>
+    <p>Are you sure you want to rent the following bicycle?</p>
+    <p>Bicycle: {{ bicycle }}</p>
+    <p>Station: {{ bicycle.station }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <label>
+            <input type="checkbox" name="agree_terms" required>
+            <span id="termsLink" style="text-decoration: none; color: black; cursor: pointer;">I agree to the terms and conditions</span>
+        </label>
+        <br><br>
+        <button type="submit">Confirm Rent</button>
+
+        <!-- 模态窗口的HTML结构 -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <pre id="termsContent"></pre>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        var modal = document.getElementById("myModal");
+        var closeButton = document.getElementsByClassName("close")[0];
+        var termsLink = document.getElementById("termsLink");
+        var termsContent = document.getElementById('termsContent');
+        var isCloseable = false;
+
+
+        function disableClose() {
+            closeButton.onclick = function() { return false; };
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    return false;
+                }
+            };
+            closeButton.style.pointerEvents = 'none';
+            closeButton.style.opacity = 0.5;
+        }
+
+        // 启用关闭按钮和点击外部区域关闭的功能
+        function enableClose() {
+            closeButton.onclick = function() {
+                modal.style.display = "none";
+            };
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+            closeButton.style.pointerEvents = 'auto'; // 允许鼠标事件
+            closeButton.style.opacity = 1; // 恢复按钮外观
+        }
+
+        termsLink.onclick = function() {
+            modal.style.display = "block";
+            disableClose(); // 禁用关闭功能
+            //  此处应该谈个窗口出来 有BUG没修改
+            fetch('.\1.txt')
+                .then(response => response.text())
+                .then(data => {
+                    termsContent.textContent = data;
+                    setTimeout(enableClose, 6000); // 6秒后启用关闭功能
+                })rental_system_user_user_permissions
+                .catch(error => {
+                    console.error('Error fetching the terms and conditions:', error);
+                    //
+                    setTimeout(enableClose, 6000);
+                });
+        };
+    </script>
+</body>
+</html>
